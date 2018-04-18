@@ -28,14 +28,15 @@ class Line extends ApiController {
 
       switch (get_class ($log)) {
         case 'LogJoin':
-            break;
+          break;
 
         case 'LogLocation':
-            break;
+          OALineBotMsg::create ()->text ($log->latitude . ' - ' . $log->longitude)->reply ($log);
+          break;
 
         case 'LogFollow':
           OALineBotMsg::create ()->text ('Hello 你好～😊')->reply ($log);
-            break;
+          break;
 
         case 'LogText':
           OALineBotMsg::create ()->text ($log->text)->reply ($log);
