@@ -57,12 +57,14 @@ class Source extends Model {
       'title' => '',
       'type' => Source::getType ($event)
     );
+Log::info ('2.1');
 
     if (!$source = Source::find ('one', array ('select' => 'id, sid, title, type', 'conditions' => array ('sid = ?', $params['sid']))))
       if (!Source::transaction (function () use (&$source, $params) { return $source = Source::create ($params); }))
         return null;
     
     $source->updateTitle ();
+Log::info ('2.2');
 
     return $source;
   }
