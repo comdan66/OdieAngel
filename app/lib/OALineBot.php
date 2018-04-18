@@ -60,9 +60,21 @@ class OALineBot {
   public function __construct ($bot = null) { $this->bot = $bot; }
   public function bot () { return $this->bot; }
   
-  public static function log ($log = '') { if ($log && ($log = is_array ($log) ? json_encode ($log) : (is_object ($log) ? serialize ($log) : $log)) && ($path = FCPATH . 'temp/input.json')) write_file ($path, $log . "\n", FOPEN_READ_WRITE_CREATE); }
+  public static function log ($log = '') {
+    if ($log && ($log = is_array ($log) ? json_encode ($log) : (is_object ($log) ? serialize ($log) : $log)) && ($path = FCPATH . 'tmp/input.json')) write_file ($path, $log . "\n", FOPEN_READ_WRITE_CREATE); }
   public static function create () { return new OALineBot (new LINEBot (new CurlHTTPClient (config ('line', 'channel', 'token')), array ('channelSecret' => config ('line', 'channel', 'secret')))); }
-  public static function events () { if (!isset ($_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE])) return array (); try { OALineBot::log ($body = file_get_contents ("php://input")); return OALineBot::create ()->bot ()->parseEventRequest ($body, $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE]); } catch (Exception $e) { return array (); } }
+  public static function events () {
+    if (!isset ($_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE]))
+      return array ();
+    try {
+      OALineBot::log ($body = file_get_contents ("php://input"));
+
+      return OALineBot::create ()->bot ()->parseEventRequest ($body, $_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE]);
+    } catch (Exception $e) {
+      return array ();
+    }
+  }
+
   public static function createLog ($source, $speaker, $event) {
     if ($event->getType () == 'message') $message_params = array ('source_id' => $source->id, 'speaker_id' => $speaker->id, 'reply_token' => $event->getReplyToken () ? $event->getReplyToken () : '', 'message_id' => $event->getMessageId () ? $event->getMessageId () : '', 'timestamp' => $event->getTimestamp () ? $event->getTimestamp () : '');
     switch (true) {
