@@ -39,6 +39,18 @@ class LogAudio extends Model {
         return false;
     return true;
   }
+
+  public function putFile2S3 () {
+    return true;
+    // if (!(isset ($this->id) && isset ($this->file) && isset ($this->message_id) && !((string)$this->file) && $this->message_id)) return false;
+    
+    // $this->CI->load->library ('OALineBot');
+
+    // if (!(($oaLineBot = OALineBot::create ()) && ($response = $oaLineBot->bot ()->getMessageContent ($this->message_id)) && $response->isSucceeded () && ($path = FCPATH . 'temp' . DIRECTORY_SEPARATOR . uniqid (rand () . '_') . (($contentType = $response->getHeader ('Content-Type')) ? contentType2ext ($contentType) : '')) && write_file ($path, $response->getRawBody ())))
+    //   return false;
+
+    // return $this->file->put ($path);
+  }
 }
 
 /* -- 檔案上傳器物件 ------------------------------------------------------------------ */

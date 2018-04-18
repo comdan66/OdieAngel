@@ -39,6 +39,17 @@ class LogImage extends Model {
         return false;
     return true;
   }
+  public function putFile2S3 () {
+    return true;
+    // if (!(isset ($this->id) && isset ($this->file) && isset ($this->message_id) && !((string)$this->file) && $this->message_id)) return false;
+    
+    // Load::lib ('OALineBot.php');
+
+    // if (!(($oaLineBot = OALineBot::create ()) && ($response = $oaLineBot->bot ()->getMessageContent ($this->message_id)) && $response->isSucceeded () && ($path = FCPATH . 'tmp' . DIRECTORY_SEPARATOR . uniqid (rand () . '_') . (($contentType = $response->getHeader ('Content-Type')) ? contentType2ext ($contentType) : '')) && write_file ($path, $response->getRawBody ())))
+    //   return false;
+
+    // return $this->file->put ($path);
+  }
 }
 
 /* -- 圖片上傳器物件 ------------------------------------------------------------------ */
