@@ -57,14 +57,12 @@ class Source extends Model {
       'title' => '',
       'type' => Source::getType ($event)
     );
-Log::info ('2.1');
 
     if (!$source = Source::find ('one', array ('select' => 'id, sid, title, type', 'where' => array ('sid = ?', $params['sid']))))
       if (!Source::transaction (function () use (&$source, $params) { return $source = Source::create ($params); }))
         return null;
     
     $source->updateTitle ();
-Log::info ('2.2');
 
     return $source;
   }
@@ -79,5 +77,22 @@ Log::info ('2.2');
     
     $this->title = $profile['displayName'];
     return $this->save ();
+  }
+  public static function findOrCreateSpeaker ($event) {
+    if (!$userId = (Source::getType ($event) == Source::TYPE_USER ? $event->getEventSourceId () : $event->getUserId ())) return ;
+    
+    $params = array (
+      'sid' => $userId,
+      'title' => '',
+      'type' => Source::TYPE_USER,
+    );
+
+    if (!$speaker = Source::find ('one', array ('select' => 'id, sid, title, type', 'where' => array ('sid = ?', $params['sid']))))
+      if (!Source::transaction (function () use (&$speaker, $params) { return verifyCreateOrm ($speaker = Source::create (array_intersect_key ($params, Source::table ()->columns))); }))
+        return null;
+    
+    $speaker->updateTitle ();
+
+    return $speaker;
   }
 }
