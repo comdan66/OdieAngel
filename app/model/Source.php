@@ -88,7 +88,7 @@ class Source extends Model {
     );
 
     if (!$speaker = Source::find ('one', array ('select' => 'id, sid, title, type', 'where' => array ('sid = ?', $params['sid']))))
-      if (!Source::transaction (function () use (&$speaker, $params) { return verifyCreateOrm ($speaker = Source::create (array_intersect_key ($params, Source::table ()->columns))); }))
+      if (!Source::transaction (function () use (&$speaker, $params) { return $speaker = Source::create ($params); }))
         return null;
     
     $speaker->updateTitle ();

@@ -43,7 +43,7 @@ class Line extends ApiController {
           break;
 
         case 'LogText':
-          $pattern = '@Miller';
+          $pattern = 'Miller';
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);
           
