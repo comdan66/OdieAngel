@@ -51,7 +51,15 @@ class Line extends ApiController {
             break;
 
           if ($source->sid == 'C8f870c3f0d5b095efe0866504205bdb2') {
-            OALineBotMsg::create ()->text ('幹嘛？找我逆！？')->reply ($log);
+            $pattern = '笨蛋';
+            $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
+            preg_match_all ($pattern, $log->text, $result);
+            
+            if ($result['k']) {
+              OALineBotMsg::create ()->text ('我才是笨蛋！')->reply ($log);
+            } else {
+              OALineBotMsg::create ()->text ('幹嘛？找我逆！？')->reply ($log);
+            }
           } else {
             $pattern = '笨蛋';
             $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
