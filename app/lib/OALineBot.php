@@ -61,7 +61,10 @@ class OALineBot {
   public function bot () { return $this->bot; }
   
   public static function log ($log = '') {
-    if ($log && ($log = is_array ($log) ? json_encode ($log) : (is_object ($log) ? serialize ($log) : $log)) && ($path = FCPATH . 'tmp/input.json')) write_file ($path, $log . "\n", FOPEN_READ_WRITE_CREATE); }
+    Load::sysFunc ('file.php');
+    if ($log && ($log = is_array ($log) ? json_encode ($log) : (is_object ($log) ? serialize ($log) : $log)) && ($path = FCPATH . 'tmp/input.json'))
+      write_file ($path, $log . "\n", FOPEN_READ_WRITE_CREATE);
+  }
   public static function create () { return new OALineBot (new LINEBot (new CurlHTTPClient (config ('line', 'channel', 'token')), array ('channelSecret' => config ('line', 'channel', 'secret')))); }
   public static function events () {
     if (!isset ($_SERVER["HTTP_" . HTTPHeader::LINE_SIGNATURE]))
