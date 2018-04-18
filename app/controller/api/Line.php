@@ -34,6 +34,7 @@ class Line extends ApiController {
             break;
 
         case 'LogFollow':
+          OALineBotMsg::create ()->text ('Hello 你好～😊')->reply ($log);
             break;
 
         case 'LogText':
