@@ -28,8 +28,10 @@ Log::info ('4');
       
       if (!$log = OALineBot::createLog ($source, $speaker, $event))
         continue;
+Log::info ('5');
 
       OALineBotMsg::create ()->text ('嗨，你好！有想問我的事情可以打「？」或直接輸入「小添屎」我就會出現囉！')->reply ($log);
+Log::info ('6');
 
       // switch (get_class ($log)) {
       //   case 'LogJoin':
