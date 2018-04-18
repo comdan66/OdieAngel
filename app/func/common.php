@@ -21,3 +21,9 @@ if (!function_exists ('remove_ckedit_tag')) {
     return preg_replace ("/\s+/", "", preg_replace ("/&#?[a-z0-9]+;/i", "", str_replace ('▼', '', str_replace ('▲', '', trim (strip_tags ($text))))));
   }
 }
+
+if (!function_exists ('catStr')) {
+  function catStr ($str, $len) {
+    return mb_strimwidth ($str, 0, ($len - 2) / 2, '…','UTF-8');
+  }
+}
