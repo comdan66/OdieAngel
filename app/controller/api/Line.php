@@ -15,12 +15,16 @@ class Line extends ApiController {
 
   public function index () {
     Load::lib ('OALineBot.php');
+Log::info ('1');
 
     foreach (OALineBot::events () as $event) {
+Log::info ('2');
       if (!$source = Source::findOrCreateSource ($event))
         continue;
+Log::info ('3');
       
       $speaker = Source::findOrCreateSpeaker ($event);
+Log::info ('4');
       
       if (!$log = OALineBot::createLog ($source, $speaker, $event))
         continue;
