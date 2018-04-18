@@ -86,7 +86,6 @@ class OALineBot {
         'reply_token' => $event->getReplyToken () ? $event->getReplyToken () : '',
         'message_id' => $event->getMessageId () ? $event->getMessageId () : '',
         'timestamp' => $event->getTimestamp () ? $event->getTimestamp () : '');
-Log::info ('4.1');
 
     switch (true) {
       case $event instanceof TextMessage:     $params = array_merge ($message_params, array ('text' => $event->getText ())); return LogText::transaction (function () use (&$log, $params) { return $log = LogText::create ($params); }) ? $log : null;
@@ -125,11 +124,7 @@ class OALineBotMsg {
 
   public function __construct () { }
 
-  public static function create () {
-Log::info ('5.1');
-
-    return new OALineBotMsg ();
-  }
+  public static function create () { return new OALineBotMsg (); }
   private function template ($alt) { return ($alt = trim ($alt)) && ($alt = catStr ($alt, 400)); }
 
   public function push ($source) { return ($source = is_string ($source) ? $source : (isset ($source->speaker_id) && $source->speaker && $source->speaker->sid ? $source->speaker->sid : (isset ($source->source_id) && $source->source && $source->source->sid ? $source->source->sid : (isset ($source->sid) ? $source->sid : null)))) && $this->builder ? OALineBot::create ()->bot ()->pushMessage ($source, $this->builder)->isSucceeded () : false; }
