@@ -25,6 +25,8 @@ class Line extends ApiController {
       if (!$log = OALineBot::createLog ($source, $speaker, $event))
         continue;
 
+      OALineBotMsg::create ()->text ('嗨，你好！有想問我的事情可以打「？」或直接輸入「小添屎」我就會出現囉！')->reply ($log);
+
       // switch (get_class ($log)) {
       //   case 'LogJoin':
       //       OALineBotMsg::create ()->text ('嗨，你好！有想問我的事情可以打「？」或直接輸入「小添屎」我就會出現囉！')->reply ($log);
