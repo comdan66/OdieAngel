@@ -47,8 +47,14 @@ class Line extends ApiController {
           $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
           preg_match_all ($pattern, $log->text, $result);
           
-          if ($result['k'])
+          if (!$result['k']) 
+            break;
+
+          if ($source->sid == 'C8f870c3f0d5b095efe0866504205bdb2') {
             OALineBotMsg::create ()->text ('幹嘛？找我逆！？')->reply ($log);
+          } else {
+            OALineBotMsg::create ()->text ('~~~~')->reply ($log);
+          }
 
           break;
         
