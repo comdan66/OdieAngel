@@ -59,7 +59,7 @@ class Source extends Model {
     );
 Log::info ('2.1');
 
-    if (!$source = Source::find ('one', array ('select' => 'id, sid, title, type', 'conditions' => array ('sid = ?', $params['sid']))))
+    if (!$source = Source::find ('one', array ('select' => 'id, sid, title, type', 'where' => array ('sid = ?', $params['sid']))))
       if (!Source::transaction (function () use (&$source, $params) { return $source = Source::create ($params); }))
         return null;
     
