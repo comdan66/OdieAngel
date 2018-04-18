@@ -42,14 +42,19 @@ class LogAudio extends Model {
 
   public function putFile2S3 () {
     return true;
-    // if (!(isset ($this->id) && isset ($this->file) && isset ($this->message_id) && !((string)$this->file) && $this->message_id)) return false;
+    if (!(isset ($this->id) && isset ($this->file) && isset ($this->message_id) && !((string)$this->file) && $this->message_id)) return false;
     
-    // $this->CI->load->library ('OALineBot');
+    Load::lib ('OALineBot.php');
+    Load::sysFunc ('file.php');
 
-    // if (!(($oaLineBot = OALineBot::create ()) && ($response = $oaLineBot->bot ()->getMessageContent ($this->message_id)) && $response->isSucceeded () && ($path = FCPATH . 'temp' . DIRECTORY_SEPARATOR . uniqid (rand () . '_') . (($contentType = $response->getHeader ('Content-Type')) ? contentType2ext ($contentType) : '')) && write_file ($path, $response->getRawBody ())))
-    //   return false;
+    if (!(($oaLineBot = OALineBot::create ()) &&
+        ($response = $oaLineBot->bot ()->getMessageContent ($this->message_id)) &&
+        $response->isSucceeded () &&
+        ($path = FCPATH . 'tmp' . DIRECTORY_SEPARATOR . uniqid (rand () . '_') . (($contentType = $response->getHeader ('Content-Type')) ? get_extension_by_mime ($contentType) : '')) &&
+        write_file ($path, $response->getRawBody ())))
+      return false;
 
-    // return $this->file->put ($path);
+    return $this->file->put ($path);
   }
 }
 

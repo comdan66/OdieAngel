@@ -27,20 +27,20 @@ class LogFile extends Model {
   }
 
   public function putFile2S3 () {
-    return true;
-    // if (!(isset ($this->id) && isset ($this->file) && isset ($this->message_id) && !((string)$this->file) && $this->message_id)) return false;
-    
-    // $this->CI->load->library ('OALineBot');
+    if (!(isset ($this->id) && isset ($this->file) && isset ($this->message_id) && !((string)$this->file) && $this->message_id)) return false;
 
-    // if (!(($oaLineBot = OALineBot::create ()) && ($response = $oaLineBot->bot ()->getMessageContent ($this->message_id)) && $response->isSucceeded ()))
-    //   return false;
+    Load::lib ('OALineBot.php');
+    Load::sysFunc ('file.php');
 
-    // $ext = ($ext = pathinfo ($this->name, PATHINFO_EXTENSION)) ? '.' . $ext : (($contentType = $response->getHeader ('Content-Type')) ? contentType2ext ($contentType) : '');
+    if (!(($oaLineBot = OALineBot::create ()) && ($response = $oaLineBot->bot ()->getMessageContent ($this->message_id)) && $response->isSucceeded ()))
+      return false;
 
-    // if (!(($path = FCPATH . 'temp' . DIRECTORY_SEPARATOR . uniqid (rand () . '_') . $ext) && write_file ($path, $response->getRawBody ())))
-    //   return false;
+    $ext = ($ext = pathinfo ($this->name, PATHINFO_EXTENSION)) ? '.' . $ext : (($contentType = $response->getHeader ('Content-Type')) ? get_extension_by_mime ($contentType) : '');
 
-    // return $this->file->put ($path);
+    if (!(($path = FCPATH . 'tmp' . DIRECTORY_SEPARATOR . uniqid (rand () . '_') . $ext) && write_file ($path, $response->getRawBody ())))
+      return false;
+
+    return $this->file->put ($path);
   }
 
   public function destroy () {
