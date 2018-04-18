@@ -79,7 +79,15 @@ class OALineBot {
   }
 
   public static function createLog ($source, $speaker, $event) {
-    if ($event->getType () == 'message') $message_params = array ('source_id' => $source->id, 'speaker_id' => $speaker->id, 'reply_token' => $event->getReplyToken () ? $event->getReplyToken () : '', 'message_id' => $event->getMessageId () ? $event->getMessageId () : '', 'timestamp' => $event->getTimestamp () ? $event->getTimestamp () : '');
+    if ($event->getType () == 'message')
+      $message_params = array (
+        'source_id' => $source->id,
+        'speaker_id' => $speaker->id,
+        'reply_token' => $event->getReplyToken () ? $event->getReplyToken () : '',
+        'message_id' => $event->getMessageId () ? $event->getMessageId () : '',
+        'timestamp' => $event->getTimestamp () ? $event->getTimestamp () : '');
+Log::info ('4.1');
+
     switch (true) {
       case $event instanceof TextMessage:     $params = array_merge ($message_params, array ('text' => $event->getText ())); return LogText::transaction (function () use (&$log, $params) { return verifyCreateOrm ($log = LogText::create (array_intersect_key ($params, LogText::table ()->columns))); }) ? $log : null;
       case $event instanceof ImageMessage:    $params = array_merge ($message_params, array ('file' => '')); return LogImage::transaction (function () use (&$log, $params) { return verifyCreateOrm ($log = LogImage::create (array_intersect_key ($params, LogImage::table ()->columns))) && $log->putFile2S3 (); }) ? $log : null;
