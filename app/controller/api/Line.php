@@ -29,6 +29,10 @@ class Line extends ApiController {
         case 'LogJoin':
           break;
 
+        case 'LogImage':
+          OALineBotMsg::create ()->image ($log->file->url ())->reply ($log);
+          break;
+
         case 'LogLocation':
           // OALineBotMsg::create ()->text ($log->latitude . ' - ' . $log->longitude)->reply ($log);
           break;
