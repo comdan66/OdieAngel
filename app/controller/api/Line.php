@@ -27,10 +27,11 @@ class Line extends ApiController {
 
       switch (get_class ($log)) {
         case 'LogJoin':
+          OALineBotMsg::create ()->text ('Hello 大家好，我是 Odie 小添屎！ 嘿嘿')->reply ($log);
           break;
 
         case 'LogImage':
-          OALineBotMsg::create ()->image ($log->file->url ())->reply ($log);
+          // OALineBotMsg::create ()->image ($log->file->url ())->reply ($log);
           break;
 
         case 'LogLocation':
@@ -42,7 +43,10 @@ class Line extends ApiController {
           break;
 
         case 'LogText':
-          // OALineBotMsg::create ()->text ($log->text)->reply ($log);
+          if (!in_array ($log->text, array ('?', '？', 'OD', 'Odie')))
+            break;
+
+          OALineBotMsg::create ()->text ('幹嘛？找我逆！？')->reply ($log);
           break;
         
         case 'LogPostback':
