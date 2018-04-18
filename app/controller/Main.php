@@ -7,8 +7,7 @@
  * @link        https://www.ioa.tw/
  */
 
-return array (
-    'up' => "ALTER TABLE `backups` ADD `time_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '時間' AFTER `read`;",
-    'down' => "ALTER TABLE `backups` DROP COLUMN `time_at`;",
-    'at' => "2018-04-18 14:01:30",
-  );
+class Main extends Controller {
+  public function index () {
+  }
+}

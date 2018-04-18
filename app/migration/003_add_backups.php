@@ -16,7 +16,8 @@ return array (
       `type` enum('datebase', 'query-log', 'log', 'other') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'other' COMMENT '類型',
       `status` enum('failure', 'success') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'failure' COMMENT '狀態',
       `read` enum('yes', 'no') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'no' COMMENT '是否已讀(yes/no)',
-
+      `time_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '時間',
+      
       `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新時間',
       `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '新增時間',
       PRIMARY KEY (`id`)
