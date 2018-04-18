@@ -9,6 +9,6 @@
 
 class Main extends Controller {
   public function index () {
-    echo "OK";
+    echo "嘿嘿";
   }
 }

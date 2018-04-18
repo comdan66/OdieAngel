@@ -43,10 +43,13 @@ class Line extends ApiController {
           break;
 
         case 'LogText':
-          if (!in_array ($log->text, array ('?', '？', 'OD', 'Odie')))
-            break;
+          $pattern = '@Miller';
+          $pattern = !preg_match ('/\(\?P<k>.+\)/', $pattern) ? '/(?P<k>(' . $pattern . '))/i' : ('/(' . $pattern . ')/i');
+          preg_match_all ($pattern, $log->text, $result);
+          
+          if ($result['k'])
+            OALineBotMsg::create ()->text ('幹嘛？找我逆！？')->reply ($log);
 
-          OALineBotMsg::create ()->text ('幹嘛？找我逆！？')->reply ($log);
           break;
         
         case 'LogPostback':
